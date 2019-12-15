@@ -38,9 +38,6 @@ class App extends React.Component {
             if (item.origin && origin.indexOf(item.origin.name) === -1)
               origin.push(item.origin.name);
           });
-          console.log(species);
-          console.log(gender);
-          console.log(data.results);
         }
         this.setState({
           sFilter: species,
@@ -73,9 +70,6 @@ class App extends React.Component {
 
   handleFilterChange = (filterKey, filters) => {
     this.handleUpdate(filterKey, filters);
-    setTimeout(() => {
-      console.log(this.state.tags);
-    }, 0);
 
     let filteredResults = this.state.actualResults.filter(item => {
       for (var i = 0; i < filters.length; i++) {
@@ -187,14 +181,13 @@ class App extends React.Component {
                   onItemChange={value => {
                     switch (value) {
                       case "Ascending":
-                        {
-                          results.sort((a, b) => (a.id > b.id ? 1 : -1));
-                        }
+                        results.sort((a, b) => (a.id > b.id ? 1 : -1));
+
                         break;
                       case "Descending":
-                        {
-                          results.sort((a, b) => (a.id < b.id ? 1 : -1));
-                        }
+                        results.sort((a, b) => (a.id < b.id ? 1 : -1));
+                        break;
+                      default:
                         break;
                     }
                     this.setState({

@@ -11,24 +11,7 @@ class FilterSetCheckbox extends React.Component {
     };
   }
 
-  getInitialState() {
-    return {
-      filters: this.initFilters(this.props.defaultAllSelected)
-    };
-  }
-
   componentDidMount() {
-    this.setState({
-      filters: this.initFilters(false)
-    });
-    Dispatcher.register(this.props.eventName + ":reset", this.handleReset);
-  }
-
-  componentWillUnmount() {
-    Dispatcher.unregister(this.props.eventName + ":reset", this.handleReset);
-  }
-
-  handleReset() {
     this.setState({
       filters: this.initFilters(false)
     });
@@ -55,16 +38,6 @@ class FilterSetCheckbox extends React.Component {
     this.dispatchChange();
   }
 
-  handleSelectAll(value) {
-    var filters = this.initFilters(value);
-
-    this.setState({
-      filters: filters
-    });
-
-    this.dispatchChange();
-  }
-
   dispatchChange() {
     var filters = this.state.filters.filter(item => {
       return item.isChecked;
@@ -78,14 +51,8 @@ class FilterSetCheckbox extends React.Component {
 
   render() {
     var items = [];
-    var selectedItems = 0;
 
-    console.log(this.state.filters);
     this.state.filters.map((item, index) => {
-      if (item.isChecked) {
-        selectedItems++;
-      }
-
       var key = this.props.name + "-" + index;
       items.push(
         <li key={key}>
@@ -100,44 +67,7 @@ class FilterSetCheckbox extends React.Component {
       );
     });
 
-    // var currentState = "some";
-    // // if (selectedItems <= 0) {
-    // //   currentState = "none";
-    // // } else
-    // if (selectedItems >= this.props.filters.length) {
-    //   currentState = "all";
-    // }
-
-    // var label1ClassName = currentState === "all" ? "active" : "";
-    // var label1 = (
-    //   <span
-    //     className={"button " + label1ClassName}
-    //     onClick={this.handleSelectAll.bind(this, true)}
-    //   >
-    //     {this.props.label1}
-    //   </span>
-    // );
-    // var label2ClassName = currentState === "none" ? "active" : "";
-    // var label2 = (
-    //   <span
-    //     className={"button " + label2ClassName}
-    //     onClick={this.handleSelectAll.bind(this, false)}
-    //   >
-    //     {this.props.label2}
-    //   </span>
-    // );
-
-    return (
-      <ul className="filterset">
-        {/* <li>
-          <label className="select-all">
-            <span className="state">{currentState}</span>
-            {label1} {label2}
-          </label>
-        </li> */}
-        {items}
-      </ul>
-    );
+    return <ul className="filterset">{items}</ul>;
   }
 }
 
